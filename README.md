@@ -1,68 +1,107 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This is a [**React Native**](https://reactnative.dev) project with speech-to-text and text-to-speech capabilities, supporting multiple languages (English, Hindi, and Marathi).
+
+# Speech Text App
+
+A React Native application that enables:
+- **Speech-to-Text**: Convert spoken words into editable text
+- **Text-to-Speech**: Convert written text into spoken words
+- **Multi-Language Support**: English, Hindi, and Marathi
+
+## Features
+
+- 🎤 Real-time speech recognition
+- 🔊 Text-to-speech playback
+- 🌍 Multi-language support (English, Hindi, Marathi)
+- ✏️ Editable text input
+- 📱 Works on both Android and iOS
+
+## Technologies Used
+
+- React Native 0.83.1
+- [@react-native-voice/voice](https://github.com/react-native-voice/voice) - Speech recognition
+- [react-native-tts](https://github.com/ak1394/react-native-tts) - Text-to-speech
+- React Navigation - Navigation between screens
 
 # Getting Started
 
 > **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-## Step 1: Start Metro
+## Step 1: Install Dependencies
+
+First, install the project dependencies:
+
+```sh
+npm install
+```
+
+For iOS, you also need to install CocoaPods dependencies:
+
+```sh
+cd ios
+bundle install
+bundle exec pod install
+cd ..
+```
+
+## Step 2: Start Metro
 
 First, you will need to run **Metro**, the JavaScript build tool for React Native.
 
 To start the Metro dev server, run the following command from the root of your React Native project:
 
 ```sh
-# Using npm
 npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+## Step 3: Build and run your app
 
 With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
 
 ### Android
 
-```sh
-# Using npm
-npm run android
+Make sure you have an Android emulator running or a device connected, then:
 
-# OR using Yarn
-yarn android
+```sh
+npm run android
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+For iOS (macOS only):
 
 ```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
 If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## How to Use
 
-## Step 3: Modify your app
+1. **Home Screen**: Launch the app to see the home screen with a button to open the Speech screen.
+
+2. **Speech Screen**:
+   - **Select Language**: Choose from English, Hindi, or Marathi using the language buttons.
+   - **Speech Recognition**: Tap the "🎤 Start Speech Recognition" button and speak. Your speech will be converted to text in the input field.
+   - **Edit Text**: The recognized text is editable - you can modify it as needed.
+   - **Text to Speech**: Tap the "🔊 Convert to Speech" button to hear the text read aloud.
+
+## Permissions
+
+The app requires the following permissions:
+
+### Android
+- `RECORD_AUDIO` - For speech recognition
+- `MODIFY_AUDIO_SETTINGS` - For audio processing
+
+These permissions are automatically requested when you first use the speech recognition feature.
+
+### iOS
+- `NSMicrophoneUsageDescription` - For microphone access
+- `NSSpeechRecognitionUsageDescription` - For speech recognition
+
+These permissions are prompted when you first use the speech recognition feature.
+
+## Step 4: Modify your app
 
 Now that you have successfully run the app, let's make changes!
 

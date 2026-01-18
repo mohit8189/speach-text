@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,17 @@ import {
 import Voice from '@react-native-voice/voice';
 import Tts from 'react-native-tts';
 
+interface SpeechResultsEvent {
+  value?: string[];
+}
+
+interface SpeechErrorEvent {
+  error?: {
+    message?: string;
+    code?: string;
+  };
+}
+
 const SpeechScreen: React.FC = () => {
   const [text, setText] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -25,6 +36,26 @@ const SpeechScreen: React.FC = () => {
     {code: 'hi-IN', label: 'Hindi'},
     {code: 'mr-IN', label: 'Marathi'},
   ];
+
+  const onSpeechStart = useCallback(() => {
+    setIsListening(true);
+  }, []);
+
+  const onSpeechEnd = useCallback(() => {
+    setIsListening(false);
+  }, []);
+
+  const onSpeechResults = useCallback((event: SpeechResultsEvent) => {
+    if (event.value && event.value.length > 0) {
+      setText(event.value[0]);
+    }
+  }, []);
+
+  const onSpeechError = useCallback((event: SpeechErrorEvent) => {
+    console.error('Speech error:', event.error);
+    setIsListening(false);
+    Alert.alert('Error', `Speech recognition error: ${event.error?.message || 'Unknown error'}`);
+  }, []);
 
   useEffect(() => {
     // Initialize Voice
@@ -45,27 +76,7 @@ const SpeechScreen: React.FC = () => {
       Tts.removeAllListeners('tts-finish');
       Tts.removeAllListeners('tts-cancel');
     };
-  }, [selectedLanguage]);
-
-  const onSpeechStart = () => {
-    setIsListening(true);
-  };
-
-  const onSpeechEnd = () => {
-    setIsListening(false);
-  };
-
-  const onSpeechResults = (event: any) => {
-    if (event.value && event.value.length > 0) {
-      setText(event.value[0]);
-    }
-  };
-
-  const onSpeechError = (event: any) => {
-    console.error('Speech error:', event.error);
-    setIsListening(false);
-    Alert.alert('Error', `Speech recognition error: ${event.error?.message || 'Unknown error'}`);
-  };
+  }, [selectedLanguage, onSpeechStart, onSpeechEnd, onSpeechResults, onSpeechError]);
 
   const requestMicrophonePermission = async () => {
     if (Platform.OS === 'android') {
